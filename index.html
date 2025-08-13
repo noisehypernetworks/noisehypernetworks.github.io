@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="description"
+        content="Noise Hypernetworks: Amortizing Test-Time Compute in Diffusion Models - A novel approach to accelerate diffusion model inference.">
+  <meta name="keywords" content="Noise Hypernetworks, Diffusion Models, Hypernetworks, Test-Time Compute, Amortization">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Noise Hypernetworks: Amortizing Test-Time Compute in Diffusion Models</title>
+
+
+
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
+        rel="stylesheet">
+
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+  <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+  <link rel="icon" href="./static/images/favicon.ico">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+  <script src="./static/js/bulma-carousel.min.js"></script>
+  <script src="./static/js/bulma-slider.min.js"></script>
+  <script src="./static/js/index.js"></script>
+</head>
+<body>
+
+<nav class="navbar" role="navigation" aria-label="main navigation">
+  <div class="navbar-brand">
+    <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+    </a>
+  </div>
+  <div class="navbar-menu">
+    <div class="navbar-start" style="flex-grow: 1; justify-content: center;">
+    </div>
+
+  </div>
+</nav>
+
+
+<section class="hero">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column has-text-centered">
+          <h1 class="title is-1 publication-title">Noise Hypernetworks: Amortizing Test-Time Compute in Diffusion Models</h1>
+          <div class="is-size-5 publication-authors">
+            <span class="author-block">
+              <a href="https://lucaeyring.com/">Luca Eyring</a><sup>1</sup>,</span>
+            <span class="author-block">
+              <a href="https://sgk98.github.io">Shyamgopal Karthik</a><sup>1,2</sup>,</span>
+            <span class="author-block">
+              <a href="https://scholar.google.com/citations?user=FXNJRDoAAAAJ&hl=en">Alexey Dosovitskiy</a><sup>3</sup>,
+            </span>
+            <span class="author-block">
+              <a href="https://natanielruiz.github.io">Nataniel Ruiz</a><sup>*4</sup>,
+            </span>
+            <span class="author-block">
+              <a href="https://www.eml-munich.de/people/zeynep-akata">Zeynep Akata</a><sup>*1</sup>
+            </span>
+          </div>
+
+          <div class="is-size-5 publication-authors">
+            <span class="author-block"><sup>1</sup>TU Munich/MCML/Helmholtz Munich,</span>
+            <span class="author-block"><sup>2</sup>University of Tübingen,</span>
+            <span class="author-block"><sup>3</sup>Inceptive,</span>
+            <span class="author-block"><sup>4</sup>Google Research</span>
+          </div>
+
+          <div class="column has-text-centered">
+            <div class="publication-links">
+              <!-- PDF Link. -->
+              <span class="link-block">
+                <a href="./static/paper.pdf"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fas fa-file-pdf"></i>
+                  </span>
+                  <span>Paper</span>
+                </a>
+              </span>
+              <span class="link-block">
+                <a href="https://arxiv.org/abs/XXXX.XXXXX"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="ai ai-arxiv"></i>
+                  </span>
+                  <span>arXiv</span>
+                </a>
+              </span>
+              <!-- Code Link. -->
+              <span class="link-block">
+                <a href="https://github.com/ExplainableML/HyperNoise"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fab fa-github"></i>
+                  </span>
+                  <span>Code</span>
+                  </a>
+              </span>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="hero teaser">
+  <div class="container is-max-desktop">
+    <div class="hero-body">
+      <img id="teaser" src="./static/concept_hypernoise.png" alt="Noise Hypernetworks Concept" height="100%">
+      <h2 class="subtitle has-text-centered">
+        <span class="dnerf">Noise Hypernetworks</span> optimizes diffusion models to desired downstream rewards by amortizing test-time compute into post-training. 
+      </h2>
+    </div>
+  </div>
+</section>
+
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <!-- Abstract. -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Abstract</h2>
+        <div class="content has-text-justified">
+          The new paradigm of test-time scaling has yielded remarkable breakthroughs in Large Language Models (LLMs) and in generative vision models, allowing models to allocate additional computation during inference to effectively tackle increasingly complex problems. Despite the improvements of this approach, an important limitation emerges: the substantial increase in computation time makes the process slow and impractical for many applications. Given the success of this paradigm and its growing usage, we seek to preserve its benefits while eschewing the inference overhead. In this work we propose one solution to the critical problem of integrating test-time scaling knowledge into a model during post-training. Specifically, we replace reward guided test-time noise optimization in diffusion models with a  Noise Hypernetwork that modulates initial input noise. We propose a theoretically grounded framework for learning this reward-tilted distribution for distilled generators, through a tractable noise-space objective that maintains fidelity to the base model while optimizing for desired characteristics. We show that our approach recovers a substantial portion of the quality gains from explicit test-time optimization at a fraction of the computational cost.
+          </p>
+        </div>
+      </div>
+    </div>
+    <!--/ Abstract. -->
+  </div>
+</section>
+
+
+<section class="section">
+  <div class="container is-max-desktop">
+
+    <div class="columns is-centered">
+
+      <!-- Comparison with other methods. -->
+      <div class="column is-full-width">
+        <h2 class="title is-3 has-text-centered">Comparison with other methods</h2>
+        <div class="content has-text-centered" style="margin-top:2rem;">
+          <img src="./static/comparison.png" alt="Comparison with other methods" style="max-width: 70%; height: auto; margin-bottom: 2rem;">
+          <img src="./static/teaser-sana.png" alt="Teaser Sana" style="max-width: 70%; height: auto; margin-bottom: 2rem;">
+          <img src="./static/geneval_flux.png" alt="Geneval results" style="max-width: 70%; height: auto;">
+        </div>
+      </div>
+    </div>
+    <!--/ Comparison with other methods. -->
+
+    <!-- Algorithm. -->
+    <div class="columns is-centered">
+      <div class="column is-full-width">
+        <h2 class="title is-3 has-text-centered">Algorithm</h2>
+        <div class="content has-text-centered" style="margin-bottom:2rem;">
+          <img src="./static/algorithm.png" alt="Algorithm" style="max-width: 50%; height: auto;">
+        </div>
+      </div>
+    </div>
+    <!--/ Algorithm. -->
+
+
+    <!-- Redness reward. -->
+    <div class="columns is-centered">
+      <div class="column is-full-width">
+        <h2 class="title is-3 has-text-centered">Redness reward</h2>
+        <div class="content has-text-justified">
+          <p>
+            HyperNoise is able to learn the reward-tilted distribution whereby the generated images are more red, while still staying within the natural distribution of images. 
+            In contrast, direct reward fine-tuning ends up trivially overfitting to the reward while worsening the quality of the generated images.
+          </p>
+        </div>
+        <div class="content has-text-centered">
+          <img src="./static/redness_illustration.png" alt="Redness Reward Illustration" style="max-width: 100%; height: auto; margin-bottom: 2rem;">
+          <img src="./static/redness_tradeoff.png" alt="Redness Tradeoff" style="max-width: 50%; height: auto;">
+        </div>
+      </div>
+    </div>
+    <!--/ Redness reward. -->
+
+  </div>
+</section>
+
+
+<section class="section" id="BibTeX">
+  <div class="container is-max-desktop content">
+    <h2 class="title">BibTeX</h2>
+    <pre><code>@article{eyring2025noise,
+  author    = {Eyring, Luca and Karthik, Shyamgopal and Dosovitskiy, Alexey and Ruiz, Nataniel and Akata, Zeynep},
+  title     = {Noise Hypernetworks: Amortizing Test-Time Compute in Diffusion Models},
+  journal   = {arXiv preprint},
+  year      = {2025},
+}</code></pre>
+  </div>
+</section>
+
+
+<footer class="footer">
+  <div class="container">
+    <div class="content has-text-centered">
+      <a class="icon-link"
+         href="./static/paper.pdf">
+        <i class="fas fa-file-pdf"></i>
+      </a>
+      <a class="icon-link" href="https://github.com/ExplainableML/HyperNoise" class="external-link" disabled>
+        <i class="fab fa-github"></i>
+      </a>
+    </div>
+    <div class="columns is-centered">
+      <div class="column is-8">
+        <div class="content">
+          <p>
+            This website template is based on the <a href="https://nerfies.github.io">Nerfies project website</a>. We thank the Nerfies authors for making their website template publicly available.
+          </p>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
